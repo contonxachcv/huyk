@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine Surprises</title>
+    <style>
+        :root {
+            --pink-light: #ffe4e1;
+            --pink-dark: #ff69b4;
+        }
+
+        body {
+            background-color: var(--pink-light);
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden; /* Ngăn scroll khi có tim bay */
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: flex;
+            gap: 40px;
+            border: 3px solid #333;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* 4 Ô quà */
+        .gift-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .gift-box {
+            width: 120px;
+            height: 150px;
+            background: #fff5f7;
+            border: 1px solid #eee;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            border-radius: 8px;
+        }
+
+        .gift-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.3);
+            border-color: var(--pink-dark);
+        }
+
+        .gift-box img { width: 70%; margin-bottom: 10px; }
+
+        /* Lịch */
+        .calendar-side { text-align: center; color: #333; }
+        h1 { font-family: 'Georgia', serif; font-size: 2.2em; margin-bottom: 5px; }
+        .month { font-style: italic; color: var(--pink-dark); margin-bottom: 10px; }
+        
+        table { border-collapse: collapse; margin: auto; }
+        th { color: #999; padding: 5px; font-size: 0.8em; }
+        td { padding: 10px; font-weight: bold; }
+        .valentine-day { 
+            color: white; 
+            background: var(--pink-dark); 
+            border-radius: 50%; 
+            position: relative;
+        }
+
+        /* Hiệu ứng trái tim bay */
+        .heart {
+            position: fixed;
+            font-size: 20px;
+            user-select: none;
+            pointer-events: none;
+            z-index: 999;
+            animation: fly 1.5s linear forwards;
+        }
+
+        @keyframes fly {
+            0% { transform: translate(0, 0) scale(1); opacity: 1; }
+            100% { transform: translate(var(--x), var(--y)) scale(0); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="gift-grid" id="grid">
+<div class="gift-box" onclick="reveal(event, 'Em là điều tuyệt vời nhất!')">
+                <img src="https://cdn-icons-png.flaticon.com/512/4359/4359963.png">
+                <small>I LOVE YOU</small>
+            </div>
+            <div class="gift-box" onclick="reveal(event, 'Yêu em hơn cả những vì sao')">
+                <img src="https://cdn-icons-png.flaticon.com/512/4359/4359963.png">
+                <small>I LOVE YOU</small>
+            </div>
+            <div class="gift-box" onclick="reveal(event, 'Mãi bên nhau em nhé ❤️')">
+                <img src="https://cdn-icons-png.flaticon.com/512/4359/4359963.png">
+                <small>I LOVE YOU</small>
+            </div>
+            <div class="gift-box" onclick="reveal(event, 'Valentine hạnh phúc nha công chúa!')">
+                <img src="https://cdn-icons-png.flaticon.com/512/4359/4359963.png">
+                <small>I LOVE YOU</small>
+            </div>
+        </div>
+
+        <div class="calendar-side">
+            <h1>Happy Valentine</h1>
+            <div class="month">February</div>
+            <table>
+                <tr><th>S</th><th>M</th><th>T</th><th>W</th><th>T</th><th>F</th><th>S</th></tr>
+                <tr><td>9</td><td>10</td><td>11</td><td>12</td><td>13</td><td class="valentine-day">14</td><td>15</td></tr>
+                <tr><td>16</td><td>17</td><td>18</td><td>19</td><td>20</td><td>21</td><td>22</td></tr>
+            </table>
+            <p style="margin-top:20px;"><b>Bấm vào 4 bất ngờ đi nèee~ ❤️</b></p>
+        </div>
+    </div>
+
+    <script>
+        function reveal(event, message) {
+            // Tạo hiệu ứng tim bay
+            for (let i = 0; i < 10; i++) {
+                createHeart(event.clientX, event.clientY);
+            }
+            
+            // Hiển thị lời nhắn sau một chút để người dùng kịp nhìn tim
+            setTimeout(() => {
+                alert(message);
+            }, 100);
+        }
+
+        function createHeart(x, y) {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = '❤️';
+            heart.style.left = x + 'px';
+            heart.style.top = y + 'px';
+            
+            // Random hướng bay
+            heart.style.setProperty('--x', (Math.random() - 0.5) * 200 + 'px');
+            heart.style.setProperty('--y', (Math.random() - 0.5) * 200 + 'px');
+            
+            document.body.appendChild(heart);
+            
+            // Xóa heart sau khi diễn xong animation
+            setTimeout(() => heart.remove(), 1500);
+        }
+    </script>
+</body>
+</html>
